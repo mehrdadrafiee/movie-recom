@@ -1,36 +1,83 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Movie Recommender
 
-## Getting Started
+A beautiful Next.js application that recommends movies similar to your favorite films using OpenAI's GPT model.
 
-First, run the development server:
+## Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- 🎬 Enter your favorite movie and get personalized recommendations
+- 🤖 Powered by OpenAI's GPT-3.5-turbo for intelligent movie suggestions
+- 🎨 Modern, responsive UI with beautiful gradients and animations
+- 📱 Mobile-friendly design
+- ⚡ Fast and efficient API calls
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Setup
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. **Clone the repository**
+   ```bash
+   git clone <your-repo-url>
+   cd movie-recom
+   ```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+2. **Install dependencies**
+   ```bash
+   pnpm install
+   ```
 
-## Learn More
+3. **Set up environment variables**
+   Create a `.env.local` file in the root directory and add your OpenAI API key:
+   ```env
+   OPENAI_API_KEY=your_openai_api_key_here
+   ```
+   
+   To get an OpenAI API key:
+   - Visit [OpenAI Platform](https://platform.openai.com/api-keys)
+   - Sign up or log in
+   - Create a new API key
+   - Copy the key and paste it in your `.env.local` file
 
-To learn more about Next.js, take a look at the following resources:
+4. **Run the development server**
+   ```bash
+   pnpm dev
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+5. **Open your browser**
+   Navigate to [http://localhost:3000](http://localhost:3000)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## How it works
 
-## Deploy on Vercel
+1. Enter your favorite movie in the search input
+2. Click "Get Recommendations" 
+3. The app sends your movie to OpenAI's API
+4. OpenAI analyzes the movie and returns 5 similar recommendations
+5. Each recommendation includes:
+   - Movie title
+   - Release year
+   - Genre
+   - Brief explanation of why it's similar
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Technologies Used
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Next.js 15** - React framework
+- **TypeScript** - Type safety
+- **Tailwind CSS** - Styling
+- **OpenAI API** - Movie recommendations
+- **Lucide React** - Icons
+
+## API Endpoints
+
+- `POST /api/recommendations` - Get movie recommendations
+  - Body: `{ "favoriteMovie": "string" }`
+  - Returns: `{ "recommendations": [...] }`
+
+## Deployment
+
+This app can be easily deployed to Vercel:
+
+1. Push your code to GitHub
+2. Connect your repository to Vercel
+3. Add your `OPENAI_API_KEY` environment variable in Vercel
+4. Deploy!
+
+## License
+
+MIT
