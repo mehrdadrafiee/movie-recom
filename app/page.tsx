@@ -158,7 +158,7 @@ export default function Home() {
     <div className="min-h-screen relative">
       {/* Loading Overlay */}
       {loading && (
-        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center">
+        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center">
           <div className="bg-white rounded-2xl p-8 shadow-2xl max-w-md mx-4 text-center">
             <div className="animate-spin rounded-full h-16 w-16 border-4 border-yellow-400 border-t-transparent mx-auto mb-6"></div>
             <h3 className="text-xl font-semibold text-gray-900 mb-2">
