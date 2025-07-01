@@ -192,7 +192,7 @@ export default function Home() {
             <h1 className="text-4xl font-bold text-black">Movie Recommender</h1>
           </div>
           <p className="text-xl text-black max-w-2xl mx-auto">
-            Tell us your favorite movie and we'll recommend similar films you might love
+            Tell us your favorite movie and we&apos;ll recommend similar films you might love
           </p>
         </div>
 

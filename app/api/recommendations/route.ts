@@ -1,6 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import OpenAI from 'openai';
 
+interface ExcludeMovie {
+  title: string;
+  year: string;
+}
+
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
@@ -17,7 +22,7 @@ export async function POST(request: NextRequest) {
     }
 
     const excludeList = excludeMovies.length > 0 
-      ? `\n\nExclude these movies from your recommendations: ${excludeMovies.map((m: any) => `${m.title} (${m.year})`).join(', ')}`
+      ? `\n\nExclude these movies from your recommendations: ${excludeMovies.map((m: ExcludeMovie) => `${m.title} (${m.year})`).join(', ')}`
       : '';
 
     const prompt = `Given the movie "${favoriteMovie}", recommend 5 similar movies. For each recommendation, provide:
@@ -56,6 +61,7 @@ Format the response as a JSON array with objects containing: title, year, reason
       recommendations = JSON.parse(response);
     } catch (parseError) {
       // If parsing fails, try to extract JSON from the response
+      console.warn('Failed to parse JSON response directly:', parseError);
       const jsonMatch = response.match(/\[.*\]/s);
       if (jsonMatch) {
         recommendations = JSON.parse(jsonMatch[0]);
