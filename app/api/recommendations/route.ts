@@ -17,10 +17,10 @@ export async function POST(request: NextRequest) {
     }
 
     const excludeList = excludeMovies.length > 0 
-      ? `\n\nPlease exclude these movies from your recommendations: ${excludeMovies.map((m: any) => `${m.title} (${m.year})`).join(', ')}`
+      ? `\n\nExclude these movies from your recommendations: ${excludeMovies.map((m: any) => `${m.title} (${m.year})`).join(', ')}`
       : '';
 
-    const prompt = `Given the movie "${favoriteMovie}", please recommend 5 similar movies. For each recommendation, provide:
+    const prompt = `Given the movie "${favoriteMovie}", recommend 5 similar movies. For each recommendation, provide:
 1. Movie title
 2. Year released
 3. Brief reason why it's similar (1-2 sentences)
