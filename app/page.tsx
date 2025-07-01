@@ -1,7 +1,8 @@
 'use client';
 
 import React, { useState } from 'react';
-import { SearchIcon, StarIcon, CalendarIcon, TagIcon, FilmIcon, CheckCircleIcon } from 'lucide-react';
+import { SearchIcon, StarIcon, CalendarIcon, TagIcon, FilmIcon, CheckCircleIcon, PlayIcon } from 'lucide-react';
+import Image from 'next/image';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -34,6 +35,7 @@ interface MovieRecommendation {
   year: string;
   reason: string;
   genre: string;
+  streaming: string;
 }
 
 const formSchema = z.object({
@@ -54,6 +56,80 @@ function formatRecommendationChain(chain: string[]) {
   const lastTwo = chain.slice(-2);
   
   return `${firstTwo.join(' → ')} → ... → ${lastTwo.join(' → ')}`;
+}
+
+// Helper function to get streaming platform info
+function getStreamingPlatformInfo(streaming: string) {
+  const lowerStreaming = streaming.toLowerCase();
+  
+  if (lowerStreaming.includes('netflix')) {
+    return { 
+      logo: '/assets/netflix.png', 
+      name: 'Netflix',
+      bg: 'bg-red-50', 
+      border: 'border-red-200' 
+    };
+  } else if (lowerStreaming.includes('amazon') || lowerStreaming.includes('prime')) {
+    return { 
+      logo: '/assets/prime.png', 
+      name: 'Prime Video',
+      bg: 'bg-blue-50', 
+      border: 'border-blue-200' 
+    };
+  } else if (lowerStreaming.includes('hulu')) {
+    return { 
+      logo: '/assets/hulu.svg', 
+      name: 'Hulu',
+      bg: 'bg-green-50', 
+      border: 'border-green-200' 
+    };
+  } else if (lowerStreaming.includes('hbo')) {
+    return { 
+      logo: '/assets/hbo.png', 
+      name: 'HBO Max',
+      bg: 'bg-indigo-50', 
+      border: 'border-indigo-200' 
+    };
+  } else if (lowerStreaming.includes('apple')) {
+    return { 
+      logo: '/assets/apple.png', 
+      name: 'Apple TV+',
+      bg: 'bg-gray-50', 
+      border: 'border-gray-200' 
+    };
+  } else {
+    return { 
+      logo: null, 
+      name: streaming,
+      bg: 'bg-gray-50', 
+      border: 'border-gray-200' 
+    };
+  }
+}
+
+// Streaming Platform Component
+function StreamingPlatform({ streaming }: { streaming: string }) {
+  const platformInfo = getStreamingPlatformInfo(streaming);
+  
+  // Early return if no logo (not available on major platforms)
+  if (!platformInfo.logo) {
+    return null;
+  }
+
+  return (
+    <div className="flex items-center">
+      <PlayIcon className="w-4 h-4 mr-2 text-gray-500" />
+      <div className={`flex items-center gap-2 px-3 py-1.5 rounded-md border ${platformInfo.bg} ${platformInfo.border}`}>
+        <Image
+          src={platformInfo.logo}
+          alt={platformInfo.name}
+          width={24}
+          height={24}
+          className="object-contain"
+        />
+      </div>
+    </div>
+  );
 }
 
 // Movie Card Component with Checkbox
@@ -77,39 +153,35 @@ function MovieCard({
       <CardHeader className="pb-3">
         <div className="flex items-start justify-between">
           <div className="flex items-center gap-3">
-            <Checkbox
-              disabled={loading}
-              checked={isWatched}
-              onCheckedChange={() => onWatchedToggle(movieId)}
-              className="mt-1"
-            />
+            <Checkbox disabled={loading} checked={isWatched} onCheckedChange={() => onWatchedToggle(movieId)} />
             <CardTitle className={`text-lg ${isWatched ? 'text-green-800 line-through' : ''}`}>
               {movie.title}
             </CardTitle>
           </div>
         </div>
         <CardDescription className="flex items-center text-sm text-gray-600">
-          <CalendarIcon className="w-4 h-4 mr-2" />
+          <CalendarIcon size={16} className="mr-2" />
           {movie.year}
         </CardDescription>
       </CardHeader>
-      <CardContent className="space-y-3">
-        <div className="flex items-center">
-          <TagIcon className="w-4 h-4 mr-2 text-gray-500" />
-          <span className="bg-purple-100 text-purple-800 px-2 py-1 rounded text-sm font-medium">
-            {movie.genre}
-          </span>
-        </div>
-        <p className="text-sm leading-relaxed text-gray-700">
-          {movie.reason}
-        </p>
-        {isWatched && (
-          <div className="flex items-center text-green-600 text-sm">
-            <CheckCircleIcon className="w-4 h-4 mr-2" />
-            Watched
+        <CardContent className="space-y-3">
+          <div className="flex items-center">
+            <TagIcon size={16} className="mr-2" />
+            <span className="bg-purple-100 text-purple-800 px-2 py-1 rounded text-sm font-medium">
+              {movie.genre}
+            </span>
           </div>
-        )}
-      </CardContent>
+          <StreamingPlatform streaming={movie.streaming} />
+          <p className="text-sm leading-relaxed text-gray-700">
+            {movie.reason}
+          </p>
+          {isWatched && (
+            <div className="flex items-center text-green-600 text-sm">
+              <CheckCircleIcon size={16} className="mr-2" />
+              Watched
+            </div>
+          )}
+        </CardContent>
     </Card>
   );
 }
@@ -243,7 +315,7 @@ export default function Home() {
                   <FormItem>
                     <FormControl>
                       <div className="relative">
-                        <SearchIcon className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5 z-10" />
+                        <SearchIcon size={16} className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 z-10" />
                         <Input
                           {...field}
                           placeholder="Enter your favorite movie (e.g., The Matrix, Inception, Pulp Fiction)"

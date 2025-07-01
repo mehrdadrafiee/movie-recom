@@ -24,9 +24,10 @@ export async function POST(request: NextRequest) {
 1. Movie title
 2. Year released
 3. Brief reason why it's similar (1-2 sentences)
-4. Genre${excludeList}
+4. Genre
+5. Where to watch (streaming platforms like Netflix, Amazon Prime, Hulu, Disney+, HBO Max, Apple TV+, or "Not available on major streaming platforms")${excludeList}
 
-Format the response as a JSON array with objects containing: title, year, reason, and genre fields.`;
+Format the response as a JSON array with objects containing: title, year, reason, genre, and streaming fields.`;
 
     const completion = await openai.chat.completions.create({
       model: "gpt-3.5-turbo",
