@@ -155,7 +155,35 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen relative">
+      {/* Loading Overlay */}
+      {loading && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center">
+          <div className="bg-white rounded-2xl p-8 shadow-2xl max-w-md mx-4 text-center">
+            <div className="animate-spin rounded-full h-16 w-16 border-4 border-yellow-400 border-t-transparent mx-auto mb-6"></div>
+            <h3 className="text-xl font-semibold text-gray-900 mb-2">
+              {recommendations.length === 0 
+                ? "Analyzing your favorite movie..." 
+                : "Getting more recommendations..."
+              }
+            </h3>
+            <p className="text-gray-600">
+              {recommendations.length === 0 
+                ? "We're finding the perfect movies for you based on your taste"
+                : "We're discovering new films based on your selection"
+              }
+            </p>
+            <div className="mt-4 flex justify-center">
+              <div className="flex space-x-1">
+                <div className="w-2 h-2 bg-yellow-400 rounded-full animate-bounce"></div>
+                <div className="w-2 h-2 bg-yellow-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+                <div className="w-2 h-2 bg-yellow-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       <div className="container mx-auto px-4 py-8">
         {/* Header */}
         <div className="text-center mb-12">
@@ -270,22 +298,6 @@ export default function Home() {
                   loading={loading}
                 />
               ))}
-            </div>
-          </div>
-        )}
-
-        {/* Loading State */}
-        {loading && (
-          <div className="max-w-4xl mx-auto">
-            <div className="text-center">
-              <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-yellow-400 mx-auto mb-4"></div>
-              <p className="text-black text-lg">
-                {recommendations.length === 0 
-                  ? "Analyzing your favorite movie..." 
-                  : "Getting more recommendations based on your selection..."
-                }
-              </p>
-              <p className="text-gray-600 mt-2">This may take a few seconds</p>
             </div>
           </div>
         )}
