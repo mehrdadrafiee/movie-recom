@@ -29,8 +29,8 @@ const getStreamingPlatformInfo = (streaming: string) => {
     return { 
       logo: '/assets/hbo.png', 
       name: 'HBO Max',
-      bg: 'bg-indigo-50', 
-      border: 'border-indigo-200' 
+      bg: 'bg-white', 
+      border: 'border-zinc-700' 
     };
   } else if (lowerStreaming.includes('apple')) {
     return { 
@@ -61,13 +61,7 @@ export default function StreamingPlatform({ streaming }: { streaming: string }) 
     <div className="flex items-center">
       <PlayIcon className="w-4 h-4 mr-2 text-gray-500" />
       <div className={`flex items-center gap-2 px-3 py-1.5 rounded-md border ${platformInfo.bg} ${platformInfo.border}`}>
-        <Image
-          src={platformInfo.logo}
-          alt={platformInfo.name}
-          width={24}
-          height={24}
-          className="object-contain"
-        />
+        <Image src={platformInfo.logo} alt={platformInfo.name} width={24} height={24} className="object-contain" />
       </div>
     </div>
   );

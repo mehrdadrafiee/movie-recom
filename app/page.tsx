@@ -158,7 +158,7 @@ export default function Home() {
     <div className="min-h-screen relative">
       {/* Loading Overlay */}
       {loading && (
-        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center">
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
           <div className="bg-white rounded-2xl p-8 shadow-2xl max-w-md mx-4 text-center">
             <div className="animate-spin rounded-full h-16 w-16 border-4 border-yellow-400 border-t-transparent mx-auto mb-6"></div>
             <h3 className="text-xl font-semibold text-gray-900 mb-2">
@@ -189,9 +189,9 @@ export default function Home() {
         <div className="text-center mb-12">
           <div className="flex items-center justify-center mb-4">
             <FilmIcon size={48} className="text-yellow-500 mr-3" />
-            <h1 className="text-4xl font-bold text-black">Movie Recommender</h1>
+            <h1 className="text-4xl font-bold">Movie Recommender</h1>
           </div>
-          <p className="text-xl text-black max-w-2xl mx-auto">
+          <p className="text-lg max-w-2xl mx-auto text-muted-foreground">
             Tell us your favorite movie and we&apos;ll recommend similar films you might love
           </p>
         </div>
@@ -211,7 +211,7 @@ export default function Home() {
                         <Input
                           {...field}
                           placeholder="Enter your favorite movie (e.g., The Matrix, Inception, Pulp Fiction)"
-                          className="w-full pl-12 pr-4 py-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-all duration-200 disabled:opacity-50"
+                          className="w-full pl-12"
                           disabled={loading}
                         />
                       </div>
@@ -258,13 +258,13 @@ export default function Home() {
                           </span>
                         </p>
                       </TooltipTrigger>
-                      <TooltipContent className="max-w-xs">
+                      <TooltipContent className="max-w-xs" side="bottom">
                         <div className="space-y-1">
                           <p className="font-medium text-xs">Full recommendation chain:</p>
                           <div className="text-xs space-y-1">
                             {recommendationChain.map((movie, index) => (
                               <div key={index} className="flex items-center gap-2">
-                                <span className="text-gray-400 text-xs w-4">{index + 1}.</span>
+                                <span className="text-xs w-4">{index + 1}.</span>
                                 <span>{movie}</span>
                               </div>
                             ))}
