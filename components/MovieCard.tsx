@@ -1,6 +1,6 @@
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
-import { CalendarIcon, CheckCircleIcon, TagIcon } from "lucide-react";
+import { CalendarIcon, TagIcon } from "lucide-react";
 import StreamingPlatform from "@/components/StreamingPlatform";
 
 interface MovieRecommendation {
